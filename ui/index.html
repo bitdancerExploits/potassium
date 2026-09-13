@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project-X</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Minimalist Desktop / Viewport Host -->
+  <div class="desktop" id="desktop">
+    <!-- Draggable Floating Window Container -->
+    <div class="window-frame" id="app-window">
+      <!-- Titlebar / Drag Handle -->
+      <div class="titlebar" id="window-titlebar">
+        <div class="titlebar-left">
+          <span class="win-dot" id="status-dot"></span>
+          <span class="win-title">project-x // runtime bridge</span>
+          <span class="win-pid mono" id="pid-tag">PID: 14208</span>
+        </div>
+        <div class="titlebar-right">
+          <button class="win-btn" id="btn-min" title="Minimize">—</button>
+          <button class="win-btn" id="btn-close" title="Close">✕</button>
+        </div>
+      </div>
+
+      <!-- Minimalist Navigation Tabs -->
+      <div class="win-tabs">
+        <button class="tab-btn active" data-tab="tab-editor">EXECUTE</button>
+        <button class="tab-btn" data-tab="tab-rva">OFFSETS</button>
+        <button class="tab-btn" data-tab="tab-telemetry">MEMORY</button>
+        <button class="tab-btn" data-tab="tab-log">CONSOLE</button>
+      </div>
+
+      <!-- Window Content Body -->
+      <div class="window-content">
+        <!-- Tab 1: Script Staging & Execution (Minimal) -->
+        <div class="tab-pane active" id="tab-editor">
+          <div class="editor-wrap">
+            <textarea class="raw-editor" id="code-box" spellcheck="false" placeholder="-- enter lua runtime script here...
+print('[project-x] environment active')">print("[project-x] runtime execution initialized")</textarea>
+          </div>
+          <div class="action-bar">
+            <div class="bar-left">
+              <span class="status-text" id="status-line">READY</span>
+            </div>
+            <div class="bar-right">
+              <button class="action-btn" id="btn-clear-code">CLEAR</button>
+              <button class="action-btn" id="btn-attach">ATTACH</button>
+              <button class="action-btn primary" id="btn-run">DISPATCH</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Minimal RVA Offsets -->
+        <div class="tab-pane" id="tab-rva">
+          <div class="rva-toolbar">
+            <input type="text" id="rva-search" class="minimal-search" placeholder="filter offset / symbol...">
+            <span class="base-badge" id="base-lbl">BASE: 0x7FF700000000</span>
+          </div>
+          <div class="rva-scroll">
+            <table class="minimal-table" id="rva-table">
+              <thead>
+                <tr>
+                  <th>SYMBOL</th>
+                  <th>RVA</th>
+                  <th>ADDRESS</th>
+                </tr>
+              </thead>
+              <tbody id="rva-rows"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab 3: Minimal Memory & Bridge Telemetry -->
+        <div class="tab-pane" id="tab-telemetry">
+          <div class="telemetry-list">
+            <div class="t-row">
+              <span class="t-label">TARGET PROCESS</span>
+              <span class="t-val">EngineProcess.exe</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">BASE ADDRESS</span>
+              <span class="t-val mono" id="t-base">0x7FF700000000</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">SECURITY TOKEN</span>
+              <span class="t-val text-green">SeDebugPrivilege [ACTIVE]</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">BRIDGE DESCRIPTOR</span>
+              <span class="t-val mono">0x0000021A4B000000 (RW)</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">EXECUTION BUFFER</span>
+              <span class="t-val mono">0x0000021A4B010000 (RWX, 64KB)</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">TASKSCHEDULER</span>
+              <span class="t-val text-green">0x8B5CEE8 [SYNCED]</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">CAPABILITIES</span>
+              <span class="t-val mono">0x0000000003FFFFFF</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">MODULE A (LOADING-ENGINE)</span>
+              <span class="t-val text-green">PE64 MAPPER [ONLINE]</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">RELOCATION LOGIC</span>
+              <span class="t-val mono">DIR64 BASE DELTA READY</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">MEMORY-INTEGRITY</span>
+              <span class="t-val text-green">VirtualProtectEx [GUARDED]</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Minimal Console Log -->
+        <div class="tab-pane" id="tab-log">
+          <div class="minimal-log" id="console-output">
+            <div><span class="ts">[init]</span> process attached (pid: 14208)</div>
+            <div><span class="ts">[init]</span> base module rebased: 0x7FF700000000</div>
+            <div><span class="ts">[init]</span> module 1 memory link initialized</div>
+            <div><span class="ts">[init]</span> module A loading-engine dynamic mapper initialized</div>
+            <div><span class="ts">[init]</span> ready for runtime execution</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Window Status Footer -->
+      <div class="win-footer">
+        <span class="footer-stat" id="stat-bytes">47 B</span>
+        <span class="footer-stat" id="stat-mode">IN-PROCESS</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

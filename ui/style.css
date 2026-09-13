@@ -1,0 +1,385 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-desktop: #000000;
+  --bg-window: #050505;
+  --bg-card: #0a0a0a;
+  --bg-input: #000000;
+  --border-color: #1a1a1a;
+  --border-light: #262626;
+  --text-main: #e5e5e5;
+  --text-muted: #555555;
+  --text-dim: #333333;
+  --accent: #ffffff;
+  --accent-green: #22c55e;
+  --accent-red: #ef4444;
+  --font: 'JetBrains Mono', monospace;
+}
+
+body {
+  background-color: var(--bg-desktop);
+  color: var(--text-main);
+  font-family: var(--font);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.mono {
+  font-family: var(--font);
+}
+
+.desktop {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+}
+
+/* =========================================================================
+   Floating Minimal Window
+   ========================================================================= */
+
+.window-frame {
+  width: 680px;
+  height: 440px;
+  background: var(--bg-window);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Titlebar */
+.titlebar {
+  height: 32px;
+  background: #080808;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  cursor: move;
+}
+
+.titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.win-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 6px var(--accent-green);
+}
+
+.win-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #888888;
+}
+
+.win-pid {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.titlebar-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.win-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-family: var(--font);
+  cursor: pointer;
+}
+
+.win-btn:hover {
+  color: var(--text-main);
+  background: #151515;
+}
+
+#btn-close:hover {
+  background: #2a0000;
+  color: var(--accent-red);
+}
+
+/* Tabs */
+.win-tabs {
+  height: 28px;
+  background: #040404;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0 16px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.tab-btn:hover {
+  color: #aaa;
+  background: #080808;
+}
+
+.tab-btn.active {
+  color: #fff;
+  background: var(--bg-window);
+  border-bottom: 1px solid var(--bg-window);
+}
+
+/* Window Content Body */
+.window-content {
+  flex: 1;
+  background: var(--bg-window);
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-pane {
+  display: none;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.tab-pane.active {
+  display: flex;
+}
+
+/* Editor Tab */
+.editor-wrap {
+  flex: 1;
+  background: #020202;
+  position: relative;
+}
+
+.raw-editor {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  color: #ccc;
+  font-family: var(--font);
+  font-size: 11.5px;
+  line-height: 18px;
+  padding: 12px;
+  resize: none;
+  outline: none;
+  tab-size: 4;
+}
+
+.raw-editor::placeholder {
+  color: #2a2a2a;
+}
+
+.action-bar {
+  height: 36px;
+  border-top: 1px solid var(--border-color);
+  background: #070707;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.status-text {
+  font-size: 10px;
+  color: var(--accent-green);
+  letter-spacing: 0.5px;
+}
+
+.action-btn {
+  background: #0f0f0f;
+  border: 1px solid var(--border-color);
+  color: #888;
+  font-family: var(--font);
+  font-size: 10px;
+  padding: 4px 12px;
+  cursor: pointer;
+  margin-left: 6px;
+  transition: all 0.15s ease;
+}
+
+.action-btn:hover {
+  background: #181818;
+  color: #eee;
+  border-color: var(--border-light);
+}
+
+.action-btn.primary {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  font-weight: 600;
+}
+
+.action-btn.primary:hover {
+  background: #cccccc;
+  border-color: #cccccc;
+}
+
+/* RVA Tab */
+.rva-toolbar {
+  height: 32px;
+  background: #080808;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.minimal-search {
+  background: #000;
+  border: 1px solid var(--border-color);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 10px;
+  padding: 3px 8px;
+  outline: none;
+  width: 200px;
+}
+
+.minimal-search:focus {
+  border-color: #444;
+}
+
+.base-badge {
+  font-size: 9.5px;
+  color: var(--text-muted);
+}
+
+.rva-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.minimal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+
+.minimal-table th {
+  position: sticky;
+  top: 0;
+  background: #050505;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-muted);
+  text-align: left;
+  padding: 6px 10px;
+  font-weight: 500;
+}
+
+.minimal-table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid #111;
+  color: #999;
+}
+
+.minimal-table tr:hover td {
+  background: #0d0d0d;
+  color: #fff;
+}
+
+/* Telemetry Tab */
+.telemetry-list {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.t-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  border-bottom: 1px solid #111;
+  padding-bottom: 8px;
+}
+
+.t-label {
+  color: var(--text-muted);
+}
+
+.t-val {
+  color: #bbb;
+}
+
+.text-green { color: var(--accent-green); }
+
+/* Console Tab */
+.minimal-log {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+  font-size: 10px;
+  line-height: 18px;
+  color: #777;
+  background: #020202;
+  display: flex;
+  flex-direction: column;
+}
+
+.ts {
+  color: #333;
+  margin-right: 6px;
+}
+
+/* Footer */
+.win-footer {
+  height: 20px;
+  background: #040404;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #222;
+}

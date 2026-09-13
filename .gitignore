@@ -1,0 +1,12 @@
+# Build artifacts
+bin/
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.lib
+*.exp
+
+# Output logs
+out.txt
+run_output.txt
