@@ -118,6 +118,14 @@ print('[project-x] environment active')">print("[project-x] runtime execution in
               <span class="t-label">MEMORY-INTEGRITY</span>
               <span class="t-val text-green">VirtualProtectEx [GUARDED]</span>
             </div>
+            <div class="t-row">
+              <span class="t-label">MODULE B (CONTEXT-SYNC)</span>
+              <span class="t-val text-green">SHARED RING-BUFFER [SYNCED]</span>
+            </div>
+            <div class="t-row">
+              <span class="t-label">SCHEDULER HOOK</span>
+              <span class="t-val mono">TaskScheduler Ticks [LOCKED]</span>
+            </div>
           </div>
         </div>
 
@@ -128,6 +136,7 @@ print('[project-x] environment active')">print("[project-x] runtime execution in
             <div><span class="ts">[init]</span> base module rebased: 0x7FF700000000</div>
             <div><span class="ts">[init]</span> module 1 memory link initialized</div>
             <div><span class="ts">[init]</span> module A loading-engine dynamic mapper initialized</div>
+            <div><span class="ts">[init]</span> module B context-sync host interface active</div>
             <div><span class="ts">[init]</span> ready for runtime execution</div>
           </div>
         </div>

@@ -10,10 +10,12 @@ add_library(project_x_core STATIC
     src/memory_bridge.cpp
     src/lua_vm_bridge.cpp
     src/loading_engine.cpp
+    src/context_sync.cpp
     include/offsets.hpp
     include/memory_bridge.hpp
     include/lua_vm_bridge.hpp
     include/loading_engine.hpp
+    include/context_sync.hpp
 )
 
 add_executable(project_x_bridge
